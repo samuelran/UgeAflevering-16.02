@@ -43,6 +43,32 @@ app.delete("/birds/:id",(req, res) => {
     
 })
 
+app.put("/birds/:id",(req,res) => {
+    const id = Number(req.params.id);
+    const bird = birds.find((bird) => bird.id === id);
+  
+    if (bird) {
+      Object.assign(bird, { id, ...req.body });
+      res.json(bird);
+    } else {
+      res.status(404).send("Unable to find bird");
+    }
+  });
+  
+  
+  app.patch("/birds/:id",(req,res) => {
+    const id = Number(req.params.id);
+    const bird = birds.find((bird) => bird.id === id);
+  
+    if (bird) {
+      Object.assign(bird, req.body, { id });
+      res.json(bird);
+    } else {
+      res.status(404).send("Unable to find bird");
+    }
+  });
+  
+
 app.listen(8080, () => {
     console.log("Server is now running on port", 8080);
 });
